@@ -9,7 +9,3 @@ router = DefaultRouter()
 router.register('incident', views.IncidentViewSet, basename='incident')
 
 urlpatterns = router.urls
-
-urlpatterns += [
-    path('incident/choices/', views.ChoicesView.as_view(), name='choices'),
-]

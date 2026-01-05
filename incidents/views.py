@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
-
+from rest_framework.decorators import action
 
 # Create your views here.
 class IncidentViewSet(viewsets.ModelViewSet):
@@ -42,15 +42,15 @@ class IncidentViewSet(viewsets.ModelViewSet):
         queryset = Incident.objects.annotate(distance=distance_expr).filter(distance__lte=max_km)
         return queryset
     
-
-class ChoicesView(APIView):
     def _format_choices(self, choices):
-        return [
-            {"value": value, "label": label}
-            for value, label in choices
-        ]
-
-    def get(self, request):
+        return [{"value": v, "label": l} for v, l in choices]
+    
+    @action(detail=False, methods=["get"], url_path="choices")
+    def choices(self, request):
+        """
+        Endpoint: /incident/choices/
+        Devuelve los choices de category, severity y status
+        """
         return Response({
             "category": self._format_choices(Incident.CATEGORY_CHOICES),
             "severity": self._format_choices(Incident.SEVERITY_CHOICES),
