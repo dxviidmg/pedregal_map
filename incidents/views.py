@@ -25,7 +25,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
         
         latitude = float(latitude)
         longitude = float(longitude)
-        max_km = float(max_km) if max_km else 5
+        max_km = float(max_km) if max_km else 10
 
 
         distance_expr = ExpressionWrapper(

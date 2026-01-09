@@ -4,8 +4,8 @@ from django.db import models
 class Incident(models.Model):
     CATEGORY_CHOICES = [
         ('A', 'Accidentes'),
-        ('V', 'Vialidad'),
         ('U', 'Urbanidad'),
+        ('V', 'Vialidad'),
     ]
 
     SEVERITY_CHOICES = [
