@@ -13,6 +13,9 @@ class IncidentViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentSerializer
 
     def get_queryset(self):
+        if self.action in ["update", "partial_update", "destroy", "retrieve"]:
+            return Incident.objects.all()
+
         latitude = self.request.GET.get("latitude")
         longitude = self.request.GET.get("longitude")
         max_km = self.request.GET.get("max_km")
@@ -39,7 +42,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
             output_field=FloatField()
         )
 
-        queryset = Incident.objects.annotate(distance=distance_expr).filter(distance__lte=max_km)
+        queryset = Incident.objects.annotate(distance=distance_expr).filter(distance__lte=max_km).order_by('id')
         return queryset
     
     def _format_choices(self, choices):
