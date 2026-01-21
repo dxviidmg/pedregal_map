@@ -42,7 +42,7 @@ class IncidentViewSet(viewsets.ModelViewSet):
             output_field=FloatField()
         )
 
-        queryset = Incident.objects.annotate(distance=distance_expr).filter(distance__lte=max_km).order_by('id')
+        queryset = Incident.objects.annotate(distance=distance_expr).filter(distance__lte=max_km)
         return queryset
     
     def _format_choices(self, choices):
